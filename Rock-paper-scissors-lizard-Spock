@@ -1,0 +1,53 @@
+#Rock-paper-scissors-lizard-Spock mini-project
+import random
+def name_to_number(name):  # converts the name (choice of player) to numbers between 0 and 4.
+    if name == 'rock':	   # so it links each name to numbers 
+        return 0
+    elif name == 'Spock':
+        return 1
+    elif name == 'paper':
+        return 2
+    elif name == 'lizard':
+        return 3
+    elif name == 'scissors':
+        return 4
+    else:
+        return 'Name is incorrect'
+def number_to_name(number):  # converts the numbers, from 0 to 4, to names. 
+    if number == 0:
+        return 'rock'
+    elif number == 1:
+        return 'Spock'
+    elif number == 2:
+        return 'paper'
+    elif number == 3:
+        return 'lizard'
+    elif number == 4:
+        return 'scissors'
+    else:
+        return 'Number is incorrect'
+
+def rpsls(player_choice):         
+    print "\nPlayer chooses %s" %(player_choice)
+    player_number = name_to_number(player_choice) # Associates a number to the player's choice
+    comp_number = random.randrange(0,5)			# Associates a random number to the computer's choice
+    comp_choice = number_to_name(comp_number)	
+    print "Computer chooses %s" %(comp_choice)
+    if player_number > 4 or player_number < 0: # Verify if the player's choice is valid
+        print "Wrong name!"
+    elif player_number == comp_number:		
+        print "Player and Computer Tie!"
+    elif (player_number - comp_number) % 5 <= 2:  # If the number linked to the player's choice subtract to computer's choice number is 1 or 2 then player wins
+        print "Player wins!"
+    elif (player_number - comp_number) % 5 > 2: # If the number linked to the player's choice subtract to computer's choice number is 3 or4 then player loses
+        print "Computer wins!"
+        
+        
+
+rpsls("rock")
+rpsls("Spock")
+rpsls("paper")
+rpsls("lizard")
+rpsls("scissors")
+
+    
