@@ -1,0 +1,88 @@
+# template for "Stopwatch: The Game"
+import simplegui
+# define global variables
+interval = 100
+current_time = 0
+count1 = 0
+count2 = 0
+checks = True
+
+def checking():
+    ''' Checks if the counters keep counting when the 
+    stopwatch is not running'''
+    global checks
+    checks = not checks 
+   
+
+# define helper function format that converts time
+# in tenths of seconds into formatted string A:BC.D
+def format(t):
+    A = (t/100) / 6
+    B = (t/100) % 6
+    C = (t / 10) % 10
+    D = t % 10
+    return str(A) + ':' + str(B) + str(C) + '.' + str(D)
+    if t == 600000:
+        timer.stop()
+    
+# define event handlers for buttons; "Start", "Stop", "Reset"
+def start():
+    global current_time, checks
+    timer.start()
+    checks = True
+        
+def stop():
+    ''' Stop button plus counters. Current_time is a whole
+    number counter2 is increasing otherwise counter1 does.'''
+    global current_time
+    timer.stop()
+    global count1, checks
+    global count2
+    if current_time % 10 == 0 and checks == True and current_time != 0:
+        count2 += 1
+        count1 += 1
+        checks = False
+    if current_time != 0 and checks == True:
+        count1 += 1
+        checks = False
+         
+def reset():
+    global current_time
+    global count1, count2
+    timer.stop()
+    current_time = 0
+    count1 = 0
+    count2 = 0
+
+# define event handler for timer with 0.1 sec interval
+def time_interval():
+    global current_time
+    current_time += 1
+    
+
+# define draw handler
+def draw_handler(canvas):
+    canvas.draw_text(format(current_time),(120,150),60,'White')
+    canvas.draw_text((str(count2) + '/'+ str(count1)), (285,55),50,'Green')
+
+
+    
+# create frame
+frame = simplegui.create_frame('StopWatch', 400, 300)
+frame.add_button('Start', start,120)
+frame.add_button('Stop', stop,120)
+frame.add_button('Reset', reset,120)
+
+# Creates a timer.
+timer = simplegui.create_timer(interval,time_interval)
+
+
+# register event handlers
+frame.set_draw_handler(draw_handler)
+
+
+# start frame
+frame.start()
+
+
+
